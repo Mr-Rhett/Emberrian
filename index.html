@@ -74,3 +74,75 @@ setInterval(draw, 10);
 
 </body>
 </html>
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3;">
+    </canvas>
+
+<script>
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+var x = canvas.width/2;
+var y = canvas.height-30;
+var dx = 2;
+var dy = -2;
+var points = 0;
+
+// Define the obstacle
+var obstacleX = 100;
+var obstacleY = 100;
+var obstacleWidth = 50;
+var obstacleHeight = 50;
+
+// Add event listeners for arrow keys
+window.addEventListener('keydown', function(e) {
+    switch(e.key) {
+        case 'ArrowUp':    dy = -2; break;
+        case 'ArrowDown':  dy = 2; break;
+        case 'ArrowLeft':  dx = -2; break;
+        case 'ArrowRight': dx = 2; break;
+    }
+});
+
+function drawObstacle() {
+    ctx.beginPath();
+    ctx.rect(obstacleX, obstacleY, obstacleWidth, obstacleHeight);
+    ctx.fillStyle = "#FF0000";
+    ctx.fill();
+    ctx.closePath();
+}
+
+function drawPoints() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText("Points: " + points, 8, 20);
+}
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawObstacle();
+    drawPoints();
+    ctx.beginPath();
+    ctx.rect(x, y, 50, 50);
+    ctx.fillStyle = "#0095DD";
+    ctx.fill();
+    ctx.closePath();
+    x += dx;
+    y += dy;
+
+    // Check for collision with obstacle
+    if(x < obstacleX + obstacleWidth && x + 50 > obstacleX && y < obstacleY + obstacleHeight && y + 50 > obstacleY) {
+        points++;
+        obstacleX = Math.random() * (canvas.width - obstacleWidth);
+        obstacleY = Math.random() * (canvas.height - obstacleHeight);
+    }
+}
+
+setInterval(draw, 10);
+</script>
+
+</body>
+</html>
