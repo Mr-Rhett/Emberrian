@@ -1,350 +1,134 @@
 <!DOCTYPE html>
-<html>
-<body>
-
-<canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3;"></canvas>
-
-<script>
-var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
-var x = canvas.width/2;
-var y = canvas.height-30;
-var dx = 2;
-var dy = -2;
-
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.beginPath();
-    ctx.rect(x, y, 50, 50);
-    ctx.fillStyle = "#0095DD";
-    ctx.fill();
-    ctx.closePath();
-    x += dx;
-    y += dy;
-}
-
-setInterval(draw, 10);
-</script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html>
-<body>
-
-<canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3;"></canvas>
-
-<script>
-var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
-var x = canvas.width/2;
-var y = canvas.height-30;
-var dx = 2;
-var dy = -2;
-
-var obstacleX = 100;
-var obstacleY = 100;
-var obstacleWidth = 50;
-var obstacleHeight = 50;
-
-function drawObstacle() {
-    ctx.beginPath();
-    ctx.rect(obstacleX, obstacleY, obstacleWidth, obstacleHeight);
-    ctx.fillStyle = "#FF0000";
-    ctx.fill();
-    ctx.closePath();
-}
-
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawObstacle();
-    ctx.beginPath();
-    ctx.rect(x, y, 50, 50);
-    ctx.fillStyle = "#0095DD";
-    ctx.fill();
-    ctx.closePath();
-    x += dx;
-    y += dy;
-}
-
-setInterval(draw, 10);
-</script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html>
-<body>
-
-<canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3;"></canvas>
-
-<script>
-var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
-var x = canvas.width/2;
-var y = canvas.height-30;
-var dx = 2;
-var dy = -2;
-var points = 0;
-
-var obstacleX = 100;
-var obstacleY = 100;
-var obstacleWidth = 50;
-var obstacleHeight = 50;
-
-window.addEventListener('keydown', function(e) {
-    switch(e.key) {
-        case 'ArrowUp':    dy = -2; break;
-        case 'ArrowDown':  dy = 2; break;
-        case 'ArrowLeft':  dx = -2; break;
-        case 'ArrowRight': dx = 2; break;
-    }
-});
-
-function drawObstacle() {
-    ctx.beginPath();
-    ctx.rect(obstacleX, obstacleY, obstacleWidth, obstacleHeight);
-    ctx.fillStyle = "#FF0000";
-    ctx.fill();
-    ctx.closePath();
-}
-
-function drawPoints() {
-    ctx.font = "16px Arial";
-    ctx.fillStyle = "#0095DD";
-    ctx.fillText("Points: " + points, 8, 20);
-}
-
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawObstacle();
-    drawPoints();
-    ctx.beginPath();
-    ctx.rect(x, y, 50, 50);
-    ctx.fillStyle = "#0095DD";
-    ctx.fill();
-    ctx.closePath();
-    x += dx;
-    y += dy;
-
-    if(x < obstacleX + obstacleWidth && x + 50 > obstacleX && y < obstacleY + obstacleHeight && y + 50 > obstacleY) {
-        points++;
-        obstacleX = Math.random() * (canvas.width - obstacleWidth);
-        obstacleY = Math.random() * (canvas.height - obstacleHeight);
-    }
-}
-
-setInterval(draw, 10);
-</script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html>
-<body>
-
-<button onclick="startGame()">Start Game</button>
-<div id="instructions" style="display:none;">
-    <p>Use the arrow keys to move the square. You earn a point each time you collide with the red obstacle. If you reach 10 points, you win! But be careful, if the square touches the edge of the canvas, you lose!</p>
-</div>
-
-<canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3; display:none;"></canvas>
-
-<script>
-var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
-var x = canvas.width/2;
-var y = canvas.height-30;
-var dx = 2;
-var dy = -2;
-var points = 0;
-
-var obstacleX = 100;
-var obstacleY = 100;
-var obstacleWidth = 50;
-var obstacleHeight = 50;
-
-window.addEventListener('keydown', function(e) {
-    switch(e.key) {
-        case 'ArrowUp':    dy = -2; break;
-        case 'ArrowDown':  dy = 2; break;
-        case 'ArrowLeft':  dx = -2; break;
-        case 'ArrowRight': dx = 2; break;
-    }
-});
-
-function drawObstacle() {
-    ctx.beginPath();
-    ctx.rect(obstacleX, obstacleY, obstacleWidth, obstacleHeight);
-    ctx.fillStyle = "#FF0000";
-    ctx.fill();
-    ctx.closePath();
-}
-
-function drawPoints() {
-    ctx.font = "16px Arial";
-    ctx.fillStyle = "#0095DD";
-    ctx.fillText("Points: " + points, 8, 20);
-}
-
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawObstacle();
-    drawPoints();
-    ctx.beginPath();
-    ctx.rect(x, y, 50, 50);
-    ctx.fillStyle = "#0095DD";
-    ctx.fill();
-    ctx.closePath();
-    x += dx;
-    y += dy;
-
-    if(x < obstacleX + obstacleWidth && x + 50 > obstacleX && y < obstacleY + obstacleHeight && y + 50 > obstacleY) {
-        points++;
-        obstacleX = Math.random() * (canvas.width - obstacleWidth);
-        obstacleY = Math.random() * (canvas.height - obstacleHeight);
-    }
-
-    if(points >= 10) {
-        alert("You win!");
-        document.location.reload();
-        clearInterval(interval);
-    }
-
-    if(x < 0 || x > canvas.width || y < 0 || y > canvas.height) {
-        alert("You lose!");
-        document.location.reload();
-        clearInterval(interval);
-    }
-}
-
-function startGame() {
-    document.getElementById("instructions").style.display = "block";
-    canvas.style.display = "block";
-    interval = setInterval(draw, 10);
-}
-</script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html>
-<body>
-
-<div id="titleScreen">
-    <h1>Welcome to the Game!</h1>
-    <button onclick="startGame()">Start Game</button>
-    <div id="levelsTab" style="display:none;"></div>
-</div>
-
-<script>
-var levels = [];
-
-for (var i = 0; i < 50; i++) {
-    var level = {
-        number: i + 1,
-        difficulty: i + 1,
-        obstacles: []
-    };
-
-    for (var j = 0; j < level.difficulty; j++) {
-        var obstacle = {
-            x: Math.random() * 500,
-            y: Math.random() * 500,
-            size: 20
-        };
-        level.obstacles.push(obstacle);
-    }
-
-    levels.push(level);
-}
-
-var levelsTab = document.getElementById("levelsTab");
-for (var i = 0; i < levels.length; i++) {
-    var levelButton = document.createElement("button");
-    levelButton.innerHTML = "Level " + (i + 1);
-    levelButton.onclick = function() { startLevel(i); };
-    levelsTab.appendChild(levelButton);
-}
-
-function startGame() {
-    levelsTab.style.display = "block";
-}
-
-function startLevel(levelNumber) {
-    // Implement your logic for starting the selected level
-}
-</script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html>
-<body>
-
-<canvas id="myCanvas" width="800" height="600" style="border:1px solid #d3d3d3;"></canvas>
-
-<script>
-var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
-var x = canvas.width/2;
-var y = canvas.height-30;
-var dx = 2;
-var dy = -2;
-var points = 0;
-
-var obstacles = [];
-
-for (var i = 0; i < 50; i++) {
-    var obstacle = {
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: 20
-    };
-    obstacles.push(obstacle);
-}
-
-function drawObstacles() {
-    for (var i = 0; i < obstacles.length; i++) {
-        var obstacle = obstacles[i];
-        ctx.beginPath();
-        ctx.rect(obstacle.x, obstacle.y, obstacle.size, obstacle.size);
-        ctx.fillStyle = "#FF0000";
-        ctx.fill();
-        ctx.closePath();
-    }
-}
-
-function drawPoints() {
-    ctx.font = "16px Arial";
-    ctx.fillStyle = "#0095DD";
-    ctx.fillText("Points: " + points, 8, 20);
-}
-
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawObstacles();
-    drawPoints();
-    ctx.beginPath();
-    ctx.rect(x, y, 50, 50);
-    ctx.fillStyle = "#0095DD";
-    ctx.fill();
-    ctx.closePath();
-    x += dx;
-    y += dy;
-
-    for (var i = 0; i < obstacles.length; i++) {
-        var obstacle = obstacles[i];
-        if(x < obstacle.x + obstacle.size && x + 50 > obstacle.x && y < obstacle.y + obstacle.size && y + 50 > obstacle.y) {
-            points++;
-            obstacle.x = Math.random() * canvas.width;
-            obstacle.y = Math.random() * canvas.height;
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
         }
-    }
-}
 
-setInterval(draw, 10);
-</script>
+        canvas {
+            display: block;
+        }
+    </style>
+    <title>Car Shooter Game</title>
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
 
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Car properties
+        const carWidth = 50;
+        const carHeight = 30;
+        let carX = canvas.width / 2 - carWidth / 2;
+        let carY = canvas.height - carHeight - 10;
+        let carSpeed = 5;
+
+        // Bullet properties
+        const bulletWidth = 5;
+        const bulletHeight = 15;
+        let bullets = [];
+
+        // Enemy properties
+        const enemyWidth = 30;
+        const enemyHeight = 30;
+        let enemies = [];
+
+        function drawCar() {
+            ctx.fillStyle = 'blue';
+            ctx.fillRect(carX, carY, carWidth, carHeight);
+        }
+
+        function drawBullet(bullet) {
+            ctx.fillStyle = 'red';
+            ctx.fillRect(bullet.x, bullet.y, bulletWidth, bulletHeight);
+        }
+
+        function drawEnemy(enemy) {
+            ctx.fillStyle = 'green';
+            ctx.fillRect(enemy.x, enemy.y, enemyWidth, enemyHeight);
+        }
+
+        function moveCar(direction) {
+            if (direction === 'left' && carX > 0) {
+                carX -= carSpeed;
+            } else if (direction === 'right' && carX < canvas.width - carWidth) {
+                carX += carSpeed;
+            }
+        }
+
+        function shoot() {
+            const bulletX = carX + carWidth / 2 - bulletWidth / 2;
+            const bulletY = carY;
+            bullets.push({ x: bulletX, y: bulletY });
+        }
+
+        function spawnEnemy() {
+            const enemyX = Math.random() * (canvas.width - enemyWidth);
+            const enemyY = 0;
+            enemies.push({ x: enemyX, y: enemyY });
+        }
+
+        function updateGameArea() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Update and draw bullets
+            for (let i = 0; i < bullets.length; i++) {
+                bullets[i].y -= 5;
+                drawBullet(bullets[i]);
+            }
+
+            // Update and draw enemies
+            for (let i = 0; i < enemies.length; i++) {
+                enemies[i].y += 2;
+                drawEnemy(enemies[i]);
+            }
+
+            // Check for collisions
+            for (let i = 0; i < bullets.length; i++) {
+                for (let j = 0; j < enemies.length; j++) {
+                    if (
+                        bullets[i].x < enemies[j].x + enemyWidth &&
+                        bullets[i].x + bulletWidth > enemies[j].x &&
+                        bullets[i].y < enemies[j].y + enemyHeight &&
+                        bullets[i].y + bulletHeight > enemies[j].y
+                    ) {
+                        // Collision detected, remove bullet and enemy
+                        bullets.splice(i, 1);
+                        enemies.splice(j, 1);
+                        i--;
+                        j--;
+                    }
+                }
+            }
+
+            // Draw the car
+            drawCar();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                moveCar('left');
+            } else if (e.key === 'ArrowRight') {
+                moveCar('right');
+            } else if (e.key === ' ') {
+                shoot();
+            }
+        });
+
+        setInterval(() => {
+            updateGameArea();
+
+            // Spawn enemies at regular intervals
+            if (Math.random() < 0.02) {
+                spawnEnemy();
+            }
+        }, 20);
+    </script>
 </body>
 </html>
