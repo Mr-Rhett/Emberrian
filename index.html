@@ -2,7 +2,8 @@
 <html>
 <body>
 
-<canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3;">
+<canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3;"></canvas>
+
 <script>
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
@@ -27,13 +28,11 @@ setInterval(draw, 10);
 
 </body>
 </html>
-
 <!DOCTYPE html>
 <html>
 <body>
 
-<canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3;">
-</canvas>
+<canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3;"></canvas>
 
 <script>
 var canvas = document.getElementById("myCanvas");
@@ -43,7 +42,6 @@ var y = canvas.height-30;
 var dx = 2;
 var dy = -2;
 
-// Define the obstacle
 var obstacleX = 100;
 var obstacleY = 100;
 var obstacleWidth = 50;
@@ -74,13 +72,11 @@ setInterval(draw, 10);
 
 </body>
 </html>
-
 <!DOCTYPE html>
 <html>
 <body>
 
-<canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3;">
-    </canvas>
+<canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3;"></canvas>
 
 <script>
 var canvas = document.getElementById("myCanvas");
@@ -91,13 +87,11 @@ var dx = 2;
 var dy = -2;
 var points = 0;
 
-// Define the obstacle
 var obstacleX = 100;
 var obstacleY = 100;
 var obstacleWidth = 50;
 var obstacleHeight = 50;
 
-// Add event listeners for arrow keys
 window.addEventListener('keydown', function(e) {
     switch(e.key) {
         case 'ArrowUp':    dy = -2; break;
@@ -133,7 +127,6 @@ function draw() {
     x += dx;
     y += dy;
 
-    // Check for collision with obstacle
     if(x < obstacleX + obstacleWidth && x + 50 > obstacleX && y < obstacleY + obstacleHeight && y + 50 > obstacleY) {
         points++;
         obstacleX = Math.random() * (canvas.width - obstacleWidth);
@@ -155,8 +148,7 @@ setInterval(draw, 10);
     <p>Use the arrow keys to move the square. You earn a point each time you collide with the red obstacle. If you reach 10 points, you win! But be careful, if the square touches the edge of the canvas, you lose!</p>
 </div>
 
-<canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3; display:none;">
-Your browser does not support the HTML5 canvas tag.</canvas>
+<canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3; display:none;"></canvas>
 
 <script>
 var canvas = document.getElementById("myCanvas");
@@ -167,13 +159,11 @@ var dx = 2;
 var dy = -2;
 var points = 0;
 
-// Define the obstacle
 var obstacleX = 100;
 var obstacleY = 100;
 var obstacleWidth = 50;
 var obstacleHeight = 50;
 
-// Add event listeners for arrow keys
 window.addEventListener('keydown', function(e) {
     switch(e.key) {
         case 'ArrowUp':    dy = -2; break;
@@ -209,25 +199,22 @@ function draw() {
     x += dx;
     y += dy;
 
-    // Check for collision with obstacle
     if(x < obstacleX + obstacleWidth && x + 50 > obstacleX && y < obstacleY + obstacleHeight && y + 50 > obstacleY) {
         points++;
         obstacleX = Math.random() * (canvas.width - obstacleWidth);
         obstacleY = Math.random() * (canvas.height - obstacleHeight);
     }
 
-    // Check for win condition
     if(points >= 10) {
         alert("You win!");
         document.location.reload();
-        clearInterval(interval); // Needed for Chrome to end game
+        clearInterval(interval);
     }
 
-    // Check for lose condition
     if(x < 0 || x > canvas.width || y < 0 || y > canvas.height) {
         alert("You lose!");
         document.location.reload();
-        clearInterval(interval); // Needed for Chrome to end game
+        clearInterval(interval);
     }
 }
 
@@ -244,63 +231,27 @@ function startGame() {
 <html>
 <body>
 
-<script>
-// Define the levels
-var levels = [];
-
-for (var i = 0; i < 50; i++) {
-    var level = {
-        number: i + 1,
-        difficulty: i + 1,  // Increase difficulty with each level
-        obstacles: []       // Add obstacles based on difficulty
-    };
-
-    for (var j = 0; j < level.difficulty; j++) {
-        var obstacle = {
-            x: Math.random() * 500,  // Random position for obstacle
-            y: Math.random() * 500,
-            size: 20  // Constant size for simplicity
-        };
-        level.obstacles.push(obstacle);
-    }
-
-    levels.push(level);
-}
-
-// Now levels is an array of 50 level objects, each with increasing difficulty
-</script>
-
-</body>
-</html>
-
-<!DOCTYPE html>
-<html>
-<body>
-
 <div id="titleScreen">
     <h1>Welcome to the Game!</h1>
     <button onclick="startGame()">Start Game</button>
-    <div id="levelsTab" style="display:none;">
-        <!-- Levels will be added here by JavaScript -->
-    </div>
+    <div id="levelsTab" style="display:none;"></div>
 </div>
 
 <script>
-// Define the levels
 var levels = [];
 
 for (var i = 0; i < 50; i++) {
     var level = {
         number: i + 1,
-        difficulty: i + 1,  // Increase difficulty with each level
-        obstacles: []       // Add obstacles based on difficulty
+        difficulty: i + 1,
+        obstacles: []
     };
 
     for (var j = 0; j < level.difficulty; j++) {
         var obstacle = {
-            x: Math.random() * 500,  // Random position for obstacle
+            x: Math.random() * 500,
             y: Math.random() * 500,
-            size: 20  // Constant size for simplicity
+            size: 20
         };
         level.obstacles.push(obstacle);
     }
@@ -308,35 +259,30 @@ for (var i = 0; i < 50; i++) {
     levels.push(level);
 }
 
-// Add levels to the levels tab
 var levelsTab = document.getElementById("levelsTab");
 for (var i = 0; i < levels.length; i++) {
     var levelButton = document.createElement("button");
     levelButton.innerHTML = "Level " + (i + 1);
-    levelButton.onclick = function() { startLevel(i); };  // Start the selected level
+    levelButton.onclick = function() { startLevel(i); };
     levelsTab.appendChild(levelButton);
 }
 
 function startGame() {
-    // Show the levels tab when the game starts
     levelsTab.style.display = "block";
 }
 
 function startLevel(levelNumber) {
-    // Start the selected level
-    // You'll need to implement this function based on your game's logic
+    // Implement your logic for starting the selected level
 }
 </script>
 
 </body>
 </html>
-
 <!DOCTYPE html>
 <html>
 <body>
 
-<canvas id="myCanvas" width="800" height="600" style="border:1px solid #d3d3d3;">
-    </canvas>
+<canvas id="myCanvas" width="800" height="600" style="border:1px solid #d3d3d3;"></canvas>
 
 <script>
 var canvas = document.getElementById("myCanvas");
@@ -347,14 +293,13 @@ var dx = 2;
 var dy = -2;
 var points = 0;
 
-// Define the obstacles
 var obstacles = [];
 
 for (var i = 0; i < 50; i++) {
     var obstacle = {
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        size: 20  // Constant size for simplicity
+        size: 20
     };
     obstacles.push(obstacle);
 }
@@ -388,7 +333,6 @@ function draw() {
     x += dx;
     y += dy;
 
-    // Check for collision with obstacles
     for (var i = 0; i < obstacles.length; i++) {
         var obstacle = obstacles[i];
         if(x < obstacle.x + obstacle.size && x + 50 > obstacle.x && y < obstacle.y + obstacle.size && y + 50 > obstacle.y) {
