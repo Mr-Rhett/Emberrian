@@ -7,321 +7,14 @@
         body {
             margin: 0;
             overflow: hidden;
-        }
-
-        canvas {
-            display: block;
-        }
-    </style>
-    <title>Car Shooter Game</title>
-</head>
-<body>
-    <canvas id="gameCanvas"></canvas>
-
-    <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-
-        // Car properties
-        const carWidth = 50;
-        const carHeight = 30;
-        let carX = canvas.width / 2 - carWidth / 2;
-        let carY = canvas.height - carHeight - 10;
-        let carSpeed = 5;
-
-        // Bullet properties
-        const bulletWidth = 5;
-        const bulletHeight = 15;
-        let bullets = [];
-
-        // Enemy properties
-        const enemyWidth = 30;
-        const enemyHeight = 30;
-        let enemies = [];
-
-        function drawCar() {
-            ctx.fillStyle = 'blue';
-            ctx.fillRect(carX, carY, carWidth, carHeight);
-        }
-
-        function drawBullet(bullet) {
-            ctx.fillStyle = 'red';
-            ctx.fillRect(bullet.x, bullet.y, bulletWidth, bulletHeight);
-        }
-
-        function drawEnemy(enemy) {
-            ctx.fillStyle = 'green';
-            ctx.fillRect(enemy.x, enemy.y, enemyWidth, enemyHeight);
-        }
-
-        function moveCar(direction) {
-            if (direction === 'left' && carX > 0) {
-                carX -= carSpeed;
-            } else if (direction === 'right' && carX < canvas.width - carWidth) {
-                carX += carSpeed;
-            }
-        }
-
-        function shoot() {
-            const bulletX = carX + carWidth / 2 - bulletWidth / 2;
-            const bulletY = carY;
-            bullets.push({ x: bulletX, y: bulletY });
-        }
-
-        function spawnEnemy() {
-            const enemyX = Math.random() * (canvas.width - enemyWidth);
-            const enemyY = 0;
-            enemies.push({ x: enemyX, y: enemyY });
-        }
-
-        function updateGameArea() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Update and draw bullets
-            for (let i = 0; i < bullets.length; i++) {
-                bullets[i].y -= 5;
-                drawBullet(bullets[i]);
-            }
-
-            // Update and draw enemies
-            for (let i = 0; i < enemies.length; i++) {
-                enemies[i].y += 2;
-                drawEnemy(enemies[i]);
-            }
-
-            // Check for collisions
-            for (let i = 0; i < bullets.length; i++) {
-                for (let j = 0; j < enemies.length; j++) {
-                    if (
-                        bullets[i].x < enemies[j].x + enemyWidth &&
-                        bullets[i].x + bulletWidth > enemies[j].x &&
-                        bullets[i].y < enemies[j].y + enemyHeight &&
-                        bullets[i].y + bulletHeight > enemies[j].y
-                    ) {
-                        // Collision detected, remove bullet and enemy
-                        bullets.splice(i, 1);
-                        enemies.splice(j, 1);
-                        i--;
-                        j--;
-                    }
-                }
-            }
-
-            // Draw the car
-            drawCar();
-        }
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') {
-                moveCar('left');
-            } else if (e.key === 'ArrowRight') {
-                moveCar('right');
-            } else if (e.key === ' ') {
-                shoot();
-            }
-        });
-
-        setInterval(() => {
-            updateGameArea();
-
-            // Spawn enemies at regular intervals
-            if (Math.random() < 0.02) {
-                spawnEnemy();
-            }
-        }, 20);
-    </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-        }
-
-        canvas {
-            display: block;
-        }
-    </style>
-    <title>Car Shooter Game</title>
-</head>
-<body>
-    <canvas id="gameCanvas"></canvas>
-
-    <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-
-        // Car properties
-        const carWidth = 50;
-        const carHeight = 30;
-        let carX = canvas.width / 2 - carWidth / 2;
-        let carY = canvas.height - carHeight - 10;
-        let carSpeed = 5;
-
-        // Bullet properties
-        const bulletWidth = 5;
-        const bulletHeight = 15;
-        let bullets = [];
-
-        // Enemy properties
-        const enemyWidth = 30;
-        const enemyHeight = 30;
-        let enemies = [];
-
-        // Obstacle properties
-        const obstacleWidth = 40;
-        const obstacleHeight = 40;
-        let obstacles = [];
-
-        function drawCar() {
-            ctx.fillStyle = 'blue';
-            ctx.fillRect(carX, carY, carWidth, carHeight);
-        }
-
-        function drawBullet(bullet) {
-            ctx.fillStyle = 'red';
-            ctx.fillRect(bullet.x, bullet.y, bulletWidth, bulletHeight);
-        }
-
-        function drawEnemy(enemy) {
-            ctx.fillStyle = 'green';
-            ctx.fillRect(enemy.x, enemy.y, enemyWidth, enemyHeight);
-        }
-
-        function drawObstacle(obstacle) {
-            ctx.fillStyle = 'gray';
-            ctx.fillRect(obstacle.x, obstacle.y, obstacleWidth, obstacleHeight);
-        }
-
-        function moveCar(direction) {
-            if (direction === 'left' && carX > 0) {
-                carX -= carSpeed;
-            } else if (direction === 'right' && carX < canvas.width - carWidth) {
-                carX += carSpeed;
-            }
-        }
-
-        function shoot() {
-            const bulletX = carX + carWidth / 2 - bulletWidth / 2;
-            const bulletY = carY;
-            bullets.push({ x: bulletX, y: bulletY });
-        }
-
-        function spawnEnemy() {
-            const enemyX = Math.random() * (canvas.width - enemyWidth);
-            const enemyY = 0;
-            enemies.push({ x: enemyX, y: enemyY });
-        }
-
-        function spawnObstacle() {
-            const obstacleX = Math.random() * (canvas.width - obstacleWidth);
-            const obstacleY = 0;
-            obstacles.push({ x: obstacleX, y: obstacleY });
-        }
-
-        function updateGameArea() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Update and draw bullets
-            for (let i = 0; i < bullets.length; i++) {
-                bullets[i].y -= 5;
-                drawBullet(bullets[i]);
-            }
-
-            // Update and draw enemies
-            for (let i = 0; i < enemies.length; i++) {
-                enemies[i].y += 2;
-                drawEnemy(enemies[i]);
-            }
-
-            // Update and draw obstacles
-            for (let i = 0; i < obstacles.length; i++) {
-                obstacles[i].y += 2;
-                drawObstacle(obstacles[i]);
-            }
-
-            // Check for collisions with enemies
-            for (let i = 0; i < bullets.length; i++) {
-                for (let j = 0; j < enemies.length; j++) {
-                    if (
-                        bullets[i].x < enemies[j].x + enemyWidth &&
-                        bullets[i].x + bulletWidth > enemies[j].x &&
-                        bullets[i].y < enemies[j].y + enemyHeight &&
-                        bullets[i].y + bulletHeight > enemies[j].y
-                    ) {
-                        // Collision detected with enemy, remove bullet and enemy
-                        bullets.splice(i, 1);
-                        enemies.splice(j, 1);
-                        i--;
-                        j--;
-                    }
-                }
-            }
-
-            // Check for collisions with obstacles
-            for (let i = 0; i < obstacles.length; i++) {
-                if (
-                    carX < obstacles[i].x + obstacleWidth &&
-                    carX + carWidth > obstacles[i].x &&
-                    carY < obstacles[i].y + obstacleHeight &&
-                    carY + carHeight > obstacles[i].y
-                ) {
-                    // Collision detected with obstacle, end the game
-                    alert("Game Over! You hit an obstacle.");
-                    document.location.reload();
-                }
-            }
-
-            // Draw the car
-            drawCar();
-        }
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') {
-                moveCar('left');
-            } else if (e.key === 'ArrowRight') {
-                moveCar('right');
-            } else if (e.key === ' ') {
-                shoot();
-            }
-        });
-
-        setInterval(() => {
-            updateGameArea();
-
-            // Spawn enemies and obstacles at regular intervals
-            if (Math.random() < 0.02) {
-                spawnEnemy();
-            }
-
-            if (Math.random() < 0.01) {
-                spawnObstacle();
-            }
-        }, 20);
-    </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
+            font-family: 'Arial', sans-serif;
         }
 
         canvas {
             display: block;
         }
 
-        #instructionScreen {
+        #instructionScreen, #titleScreen {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -337,181 +30,9 @@
             z-index: 2;
         }
 
-        #instructionScreen button {
+        #instructionScreen button, #titleScreen button {
             margin-top: 20px;
             padding: 10px;
-            font-size: 18px;
-        }
-    </style>
-    <title>Car Shooter Game</title>
-</head>
-<body>
-    <canvas id="gameCanvas"></canvas>
-    <div id="instructionScreen">
-        <p>Instructions:</p>
-        <p>Use Arrow keys to move the blue square</p>
-        <p>Press Spacebar to shoot bullets</p>
-        <p>Avoid hitting obstacles</p>
-        <p>Shoot enemies to score points</p>
-        <p>Reach a certain score to win</p>
-        <p>Or hit an obstacle to lose</p>
-        <button onclick="startGame()">Play</button>
-        <button disabled>Coming Soon (Servers/Realms/Quest)</button>
-    </div>
-
-    <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const instructionScreen = document.getElementById('instructionScreen');
-        let gameInterval;
-
-        // Game properties
-        let level = 1;
-        let score = 0;
-        const winScore = 50;
-
-        // ... (Previous code for car, bullet, enemy, and obstacle properties)
-
-        function startGame() {
-            instructionScreen.style.display = 'none';
-            gameInterval = setInterval(updateGameArea, 20);
-            document.addEventListener('keydown', keyDownHandler);
-        }
-
-        function keyDownHandler(e) {
-            if (e.key === 'ArrowLeft') {
-                moveCar('left');
-            } else if (e.key === 'ArrowRight') {
-                moveCar('right');
-            } else if (e.key === ' ') {
-                shoot();
-            }
-        }
-
-        // ... (Previous code for drawCar, drawBullet, drawEnemy, drawObstacle, moveCar, shoot, spawnEnemy, spawnObstacle)
-
-        function updateGameArea() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Update and draw bullets
-            for (let i = 0; i < bullets.length; i++) {
-                bullets[i].y -= 5;
-                drawBullet(bullets[i]);
-            }
-
-            // Update and draw enemies
-            for (let i = 0; i < enemies.length; i++) {
-                enemies[i].y += 2;
-                drawEnemy(enemies[i]);
-            }
-
-            // Update and draw obstacles
-            for (let i = 0; i < obstacles.length; i++) {
-                obstacles[i].y += 2;
-                drawObstacle(obstacles[i]);
-            }
-
-            // Check for collisions with enemies
-            for (let i = 0; i < bullets.length; i++) {
-                for (let j = 0; j < enemies.length; j++) {
-                    if (
-                        bullets[i].x < enemies[j].x + enemyWidth &&
-                        bullets[i].x + bulletWidth > enemies[j].x &&
-                        bullets[i].y < enemies[j].y + enemyHeight &&
-                        bullets[i].y + bulletHeight > enemies[j].y
-                    ) {
-                        // Collision detected with enemy, remove bullet and enemy
-                        bullets.splice(i, 1);
-                        enemies.splice(j, 1);
-                        i--;
-                        j--;
-
-                        // Increase score
-                        score += 10;
-                    }
-                }
-            }
-
-            // Check for collisions with obstacles
-            for (let i = 0; i < obstacles.length; i++) {
-                if (
-                    carX < obstacles[i].x + obstacleWidth &&
-                    carX + carWidth > obstacles[i].x &&
-                    carY < obstacles[i].y + obstacleHeight &&
-                    carY + carHeight > obstacles[i].y
-                ) {
-                    // Collision detected with obstacle, end the game
-                    endGame();
-                }
-            }
-
-            // Draw the car
-            drawCar();
-
-            // Draw level and score
-            ctx.fillStyle = 'white';
-            ctx.font = '20px Arial';
-            ctx.fillText(`Level: ${level}`, 10, 20);
-            ctx.fillText(`Score: ${score}`, 10, 40);
-
-            // Check for win condition
-            if (score >= winScore) {
-                winGame();
-            }
-        }
-
-        function endGame() {
-            clearInterval(gameInterval);
-            alert("Game Over! You hit an obstacle.");
-            document.location.reload();
-        }
-
-        function winGame() {
-            clearInterval(gameInterval);
-            alert(`Congratulations! You won Level ${level}`);
-            level++;
-            score = 0;
-            document.location.reload();
-        }
-    </script>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            font-family: 'Arial', sans-serif;
-        }
-
-        canvas {
-            display: block;
-        }
-
-        #titleScreen {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            font-size: 32px;
-            z-index: 2;
-        }
-
-        #titleScreen button {
-            margin: 10px;
-            padding: 15px;
             font-size: 18px;
             cursor: pointer;
             border: none;
@@ -536,34 +57,56 @@
         <button disabled>Coming Soon</button>
     </div>
 
+    <div id="instructionScreen">
+        <p>Instructions:</p>
+        <p>Use Arrow keys to move the blue square</p>
+        <p>Press Spacebar to shoot bullets</p>
+        <p>Avoid hitting obstacles</p>
+        <p>Shoot enemies to score points</p>
+        <p>Reach a certain score to win</p>
+        <p>Or hit an obstacle to lose</p>
+        <button onclick="startGame()">Play</button>
+        <button disabled>Coming Soon (Servers/Realms/Quest)</button>
+    </div>
+
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         const titleScreen = document.getElementById('titleScreen');
+        const instructionScreen = document.getElementById('instructionScreen');
         let gameInterval;
 
-        // ... (Previous code for game properties, functions, and event listeners)
+        // Game properties
+        let level = 1;
+        let score = 0;
+        const winScore = 50;
+
+        // ... (Previous code for car, bullet, enemy, and obstacle properties)
 
         function startGame() {
             titleScreen.style.display = 'none';
+            instructionScreen.style.display = 'none';
             canvas.style.display = 'block';
             gameInterval = setInterval(updateGameArea, 20);
             document.addEventListener('keydown', keyDownHandler);
         }
 
         function showInstructions() {
-            alert(
-                "Instructions:\n\n" +
-                "Use Arrow keys to move the blue square\n" +
-                "Press Spacebar to shoot bullets\n" +
-                "Avoid hitting obstacles\n" +
-                "Shoot enemies to score points\n" +
-                "Reach a certain score to win\n" +
-                "Or hit an obstacle to lose"
-            );
+            titleScreen.style.display = 'none';
+            instructionScreen.style.display = 'flex';
         }
 
-        // ... (Previous code for keyDownHandler, updateGameArea, endGame, winGame)
+        function keyDownHandler(e) {
+            if (e.key === 'ArrowLeft') {
+                moveCar('left');
+            } else if (e.key === 'ArrowRight') {
+                moveCar('right');
+            } else if (e.key === ' ') {
+                shoot();
+            }
+        }
+
+        // ... (Previous code for drawCar, drawBullet, drawEnemy, drawObstacle, moveCar, shoot, spawnEnemy, spawnObstacle, updateGameArea, endGame, winGame)
     </script>
 </body>
 </html>
